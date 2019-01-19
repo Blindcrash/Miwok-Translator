@@ -47,8 +47,14 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/white"
                 tools:text="one" />
+
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/image_play"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_play_circle" />
     </LinearLayout>
 
 
