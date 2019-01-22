@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NumbersFragment extends Fragment {
+public class PhrasesFragment extends Fragment {
 
     private MediaPlayer mMediaPlayer;
 
@@ -45,6 +47,12 @@ public class NumbersFragment extends Fragment {
         }
     };
 
+    private  MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            releaseMediaPlayer();
+        }
+    };
     private void releaseMediaPlayer() {
         // If the media player is not null, then it may be currently playing a sound.
         if (mMediaPlayer != null) {
@@ -61,18 +69,7 @@ public class NumbersFragment extends Fragment {
         }
     }
 
-    private  MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mediaPlayer) {
-            releaseMediaPlayer();
-        }
-    };
-
-
-
-
-
-    public NumbersFragment() {
+    public PhrasesFragment() {
         // Required empty public constructor
     }
 
@@ -82,29 +79,27 @@ public class NumbersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.word_list, container, false);
 
-
         //Crea y organiza el audio manager para el audio focus
         mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
-
         //Creacion de arreglo de las palabras que se van a usar
 
-        final ArrayList<Word> words = new ArrayList<Word>();
+        final ArrayList<Word> phrases = new ArrayList<Word>();
 
-        words.add(new Word("one","lutti",R.drawable.number_one,R.raw.number_one));
-        words.add(new Word("two","otiiko",R.drawable.number_two,R.raw.number_two));
-        words.add(new Word("three","tolookosu",R.drawable.number_three,R.raw.number_three));
-        words.add(new Word("four","oyysia",R.drawable.number_four,R.raw.number_four));
-        words.add(new Word("five","massokka",R.drawable.number_five,R.raw.number_five));
-        words.add(new Word("six","temmokka",R.drawable.number_six,R.raw.number_six));
-        words.add(new Word("seven","kenekaku",R.drawable.number_seven,R.raw.number_seven));
-        words.add(new Word("eight","kawinta",R.drawable.number_eight,R.raw.number_eight));
-        words.add(new Word("nine","wo'e",R.drawable.number_nine,R.raw.number_nine));
-        words.add(new Word("ten","na'aacha",R.drawable.number_ten,R.raw.number_ten));
+        phrases.add(new Word("Where are you going?","minto wuksus",R.raw.phrase_where_are_you_going));
+        phrases.add(new Word("What is your name?","tinnә oyaase'nә",R.raw.phrase_what_is_your_name));
+        phrases.add(new Word("My name is...","oyaaset...",R.raw.phrase_my_name_is));
+        phrases.add(new Word("How are you feeling?","michәksәs?",R.raw.phrase_how_are_you_feeling));
+        phrases.add(new Word("I’m feeling good.","kuchi achit",R.raw.phrase_im_feeling_good));
+        phrases.add(new Word("Are you coming?","әәnәs'aa?",R.raw.phrase_are_you_coming));
+        phrases.add(new Word("Yes, I’m coming.","hәә’ әәnәm",R.raw.phrase_yes_im_coming));
+        phrases.add(new Word("I’m coming.","әәnәm",R.raw.phrase_im_coming));
+        phrases.add(new Word("Let’s go.","yoowutis",R.raw.phrase_lets_go));
+        phrases.add(new Word("Come here.","әnni'nem",R.raw.phrase_come_here));
 
         //Creacion de adaptador para las palabras
 
-        WordAdapter adapter = new WordAdapter(getActivity(), words, R.color.category_numbers);
+        WordAdapter adapter = new WordAdapter(getActivity(), phrases,R.color.category_phrases);
 
         ListView listView = (ListView) rootView.findViewById(R.id.list);
 
@@ -114,8 +109,7 @@ public class NumbersFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-
-                Word word = words.get(position);
+                Word word = phrases.get(position);
 
                 releaseMediaPlayer();
 
@@ -143,9 +137,6 @@ public class NumbersFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-
-        // When the activity is stopped, release the media player resources because we won't
-        // be playing any more sounds.
         releaseMediaPlayer();
     }
 }
