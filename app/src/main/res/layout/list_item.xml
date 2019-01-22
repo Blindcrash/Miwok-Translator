@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/list_item_height"
         android:background="@color/tan_background"
         android:minHeight="@dimen/list_item_height"
         android:orientation="horizontal">
@@ -15,17 +15,17 @@
             android:layout_width="@dimen/list_item_height"
             android:layout_height="@dimen/list_item_height"
             android:contentDescription="@string/Show_Image"
-            android:src="@mipmap/ic_launcher" />
+             />
 
         <LinearLayout
             android:id="@+id/text_container"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
-
+            android:layout_height="@dimen/list_item_height"
             android:background="@color/category_numbers"
             android:orientation="vertical"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingRight="16dp"
+            android:layout_toRightOf="@id/image">
 
             <TextView
                 android:id="@+id/miwok_text_view"
@@ -54,8 +54,11 @@
             android:id="@+id/image_play"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_play_arrow" />
-    </LinearLayout>
+            android:src="@drawable/ic_play_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"/>
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>
