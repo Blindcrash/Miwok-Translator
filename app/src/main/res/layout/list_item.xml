@@ -54,7 +54,7 @@
             android:id="@+id/image_play"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_play_circle" />
+            android:src="@drawable/ic_play_arrow" />
     </LinearLayout>
 
 
