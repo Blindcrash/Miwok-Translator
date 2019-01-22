@@ -23,6 +23,6 @@ public class MainActivity extends AppCompatActivity {
         CategoryAdapter adapter = new CategoryAdapter(getSupportFragmentManager());
 
         // Set the adapter onto the view pager
-        viewPager.setAdapter(adapter); 
+        viewPager.setAdapter(adapter);
     }
 }
