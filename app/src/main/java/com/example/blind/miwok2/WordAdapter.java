@@ -26,27 +26,31 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Check if the existing view is being reused, otherwise inflate the view
+
+        // Revisa si hay una vista, sino la "infla" para que los fragmentos puedan ser usados
+        // Por el tipo de archivo
+
+
         View listItemView = convertView;
         if(listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
 
-        // Get the {@link AndroidFlavor} object located at this position in the list
+        // Consigue la posicion del item seleccionado
         Word currentWord = getItem(position);
 
-        // Find the TextView in the list_item.xml layout with the ID version_name
+        // Encuentra la vista de texto en la lista de items por el id para definir el texto en el
+        // idoma Miwok
         TextView miwokTextView = (TextView) listItemView.findViewById(R.id.miwok_text_view);
-        // Get the version name from the current AndroidFlavor object and
-        // set this text on the name TextView
         miwokTextView.setText(currentWord.getMiwokTranslation());
 
-        // Find the TextView in the list_item.xml layout with the ID version_number
+        // Encuentra la vista de texto en la lista de items por el id para definir el texto en el
+        // idoma Ingles
         TextView defaultTextView = (TextView) listItemView.findViewById(R.id.default_text_view);
-        // Get the version number from the current AndroidFlavor object and
-        // set this text on the number TextView
         defaultTextView.setText(currentWord.getDefaultTranslation());
 
+        // Encuentra la vista de texto en la lista de item y verifica si tiene una imagen
+        // dependiendo de la variante agarra o no la imagen
         ImageView defaultImageView = (ImageView) listItemView.findViewById(R.id.image);
 
         if (currentWord.hasImage()) {
@@ -55,6 +59,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
             defaultImageView.setVisibility(View.VISIBLE);
 
         } else {
+          // Sino encuentra la imagen desaparece el objeto de la vista como si no existiera
             defaultImageView.setVisibility(View.GONE);
         }
 
@@ -64,9 +69,8 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         textContainer.setBackgroundColor(color);
 
-
-        // Return the whole list item layout (containing 2 TextViews and an ImageView)
-        // so that it can be shown in the ListView
+        // Regresa los valores de los items de la lista
+        // Para mostrarlos en la list view
         return listItemView;
     }
 }

@@ -27,18 +27,14 @@ public class NumbersFragment extends Fragment {
         public void onAudioFocusChange(int focusChange) {
             if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK){
 
-                // Pause playback and reset player to the start of the file. That way, we can
-                // play the word from the beginning when we resume playback.
-
                 mMediaPlayer.pause();
                 mMediaPlayer.seekTo(0);
             }
             else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                // The AUDIOFOCUS_GAIN case means we have regained focus and can resume playback.
+
                 mMediaPlayer.start();
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                // The AUDIOFOCUS_LOSS case means we've lost audio focus and
-                // Stop playback and clean up resources
+
                 releaseMediaPlayer();
             }
 
@@ -46,15 +42,10 @@ public class NumbersFragment extends Fragment {
     };
 
     private void releaseMediaPlayer() {
-        // If the media player is not null, then it may be currently playing a sound.
         if (mMediaPlayer != null) {
-            // Regardless of the current state of the media player, release its resources
-            // because we no longer need it.
+
             mMediaPlayer.release();
 
-            // Set the media player back to null. For our code, we've decided that
-            // setting the media player to null is an easy way to tell that the media player
-            // is not configured to play an audio file at the moment.
             mMediaPlayer = null;
 
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
@@ -73,7 +64,6 @@ public class NumbersFragment extends Fragment {
 
 
     public NumbersFragment() {
-        // Required empty public constructor
     }
 
 
@@ -83,11 +73,9 @@ public class NumbersFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.word_list, container, false);
 
 
-        //Crea y organiza el audio manager para el audio focus
         mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
 
-        //Creacion de arreglo de las palabras que se van a usar
 
         final ArrayList<Word> words = new ArrayList<Word>();
 
@@ -102,7 +90,6 @@ public class NumbersFragment extends Fragment {
         words.add(new Word("nine","wo'e",R.drawable.number_nine,R.raw.number_nine));
         words.add(new Word("ten","na'aacha",R.drawable.number_ten,R.raw.number_ten));
 
-        //Creacion de adaptador para las palabras
 
         WordAdapter adapter = new WordAdapter(getActivity(), words, R.color.category_numbers);
 
@@ -119,15 +106,11 @@ public class NumbersFragment extends Fragment {
 
                 releaseMediaPlayer();
 
-                // Request audio focus for playback
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
-                        // Use the music stream.
                         AudioManager.STREAM_MUSIC,
-                        // Request permanent focus.
                         AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    // Start Audiofocus
 
                     mMediaPlayer = MediaPlayer.create(getActivity(), word.getAudioResourceId());
                     mMediaPlayer.start();
@@ -144,8 +127,6 @@ public class NumbersFragment extends Fragment {
     public void onStop() {
         super.onStop();
 
-        // When the activity is stopped, release the media player resources because we won't
-        // be playing any more sounds.
         releaseMediaPlayer();
     }
 }

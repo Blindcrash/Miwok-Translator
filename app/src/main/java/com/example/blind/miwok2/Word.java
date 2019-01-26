@@ -1,8 +1,9 @@
 package com.example.blind.miwok2;
 
-import android.media.Image;
-
 public class Word {
+
+    // Variables globales creadas para ser llamadas en los metodos
+    // Primero las de las palabras en ambos idiomas
 
     private String mDefaultTranslation;
 
@@ -27,6 +28,7 @@ public class Word {
         mAudioResourceId = audioResourceId;
     }
 
+    // Los metodos son llamados en las otras actividades para solicitar los datos de las listas
 
     public String getDefaultTranslation(){
         return mDefaultTranslation;
@@ -35,8 +37,6 @@ public class Word {
     public String getMiwokTranslation (){
         return mMiwokTranslation;
     }
-
-
 
     public int getImageResourceId(){
         return mImageResourceId;

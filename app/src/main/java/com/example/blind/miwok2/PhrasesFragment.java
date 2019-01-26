@@ -24,24 +24,23 @@ public class PhrasesFragment extends Fragment {
 
     private AudioManager mAudioManager;
 
+    // Personalizacion de memoria en el audiofocus y en resultado de reproduccion
     AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
             if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK){
 
-                // Pause playback and reset player to the start of the file. That way, we can
-                // play the word from the beginning when we resume playback.
-
                 mMediaPlayer.pause();
                 mMediaPlayer.seekTo(0);
             }
             else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                // The AUDIOFOCUS_GAIN case means we have regained focus and can resume playback.
+
                 mMediaPlayer.start();
+
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                // The AUDIOFOCUS_LOSS case means we've lost audio focus and
-                // Stop playback and clean up resources
+
                 releaseMediaPlayer();
+
             }
 
         }
@@ -54,15 +53,12 @@ public class PhrasesFragment extends Fragment {
         }
     };
     private void releaseMediaPlayer() {
-        // If the media player is not null, then it may be currently playing a sound.
         if (mMediaPlayer != null) {
-            // Regardless of the current state of the media player, release its resources
-            // because we no longer need it.
+
             mMediaPlayer.release();
 
-            // Set the media player back to null. For our code, we've decided that
-            // setting the media player to null is an easy way to tell that the media player
-            // is not configured to play an audio file at the moment.
+            // Se pone en null en este momento para decir que no hay audio configurado en el momento
+
             mMediaPlayer = null;
 
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
@@ -70,7 +66,7 @@ public class PhrasesFragment extends Fragment {
     }
 
     public PhrasesFragment() {
-        // Required empty public constructor
+        // Constructor publico requerido
     }
 
 
@@ -113,15 +109,13 @@ public class PhrasesFragment extends Fragment {
 
                 releaseMediaPlayer();
 
-                // Request audio focus for playback
+                // Pide un request para audio focus
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
-                        // Use the music stream.
                         AudioManager.STREAM_MUSIC,
-                        // Request permanent focus.
                         AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    // Start Audiofocus
+                    // Empieza el Audiofocus
 
                     mMediaPlayer = MediaPlayer.create(getActivity(), word.getAudioResourceId());
                     mMediaPlayer.start();
@@ -137,6 +131,7 @@ public class PhrasesFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        // Requerido que se suelten los datos para no ocupar memoria extra
         releaseMediaPlayer();
     }
 }
